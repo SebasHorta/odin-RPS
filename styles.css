@@ -66,7 +66,7 @@ body {
 
 /* BUTTONS */
 button {
-    font-size: 22px;
+    font-size: 25px;
     background: #3882F6;
     border: 1px solid #3882F6;
     color: white;
@@ -95,9 +95,13 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 16px 30px;
+    gap: 16px 20px;
     flex-wrap: wrap;
     padding: 12px;
+}
+
+.container button {
+    min-width: 180px;
 }
 
 /* RESULTS */
