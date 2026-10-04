@@ -34,6 +34,7 @@ body {
     border: 6px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
 }
 
 .score {
@@ -73,11 +74,16 @@ button {
     border-radius: 6px;
     padding: 5px 22px;
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.2s ease-in-out, box-shadow 0.1s ease-in-out;
 }
 
 button:hover {
     background: #3056c9;
+}
+
+button:active {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 /* RESET BUTTON: outlined variant */
