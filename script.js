@@ -62,4 +62,4 @@ function playGame() {
     console.log(`${final} wins!`);
 }
 
-playGame();
+// playGame();
