@@ -1,65 +1,83 @@
+// CONSTANTS
 const ROCK = 1;
 const PAPER = 2;
 const SCISSORS = 3;
 
-function getHumanChoice() {
-    const playerChoice = prompt("Enter your choice (Rock, paper, or scissors): ").toLowerCase();
-    if (playerChoice === "rock") {
-        return ROCK;
-    } else if (playerChoice === "paper") {
-        return PAPER;
-    } else {
-        return SCISSORS;
-    }
+// GAME STATE
+let humanScore = 0;
+let computerScore = 0;
+
+// DOM ELEMENTS
+const choiceBtns = document.querySelectorAll(".container button");
+const resetBtn = document.querySelector("#reset");
+
+// GAME LOGIC
+function getHumanChoice(choice) {
+  if (choice === "rock") {
+    return ROCK;
+  } else if (choice === "paper") {
+    return PAPER;
+  } else {
+    return SCISSORS;
+  }
 }
 
 function getComputerChoice() {
-    const computerChoice = Math.floor(Math.random() * 3) + 1;
-    return computerChoice;
+  const computerChoice = Math.floor(Math.random() * 3) + 1;
+  return computerChoice;
 }
 
 function playRound(humanChoice, computerChoice) {
-    // w = win, l = lose, t = tie
-    switch (true) {
-        case (humanChoice === ROCK && computerChoice === PAPER):
-            console.log("You lose! Paper beats Rock!");
-            return "l";
-        case (humanChoice === ROCK && computerChoice === SCISSORS):
-            console.log("You win! Rock beats Scissors!");
-            return "w";
-        case (humanChoice === PAPER && computerChoice === ROCK):
-            console.log("You win! Paper beats Rock!");
-            return "w";
-        case (humanChoice === PAPER && computerChoice === SCISSORS):
-            console.log("You lose! Scissors beats Paper!");
-            return "l";
-        case (humanChoice === SCISSORS && computerChoice === ROCK):
-            console.log("You lose! Rock beats Scissors!");
-            return "l";
-        case (humanChoice === SCISSORS && computerChoice === PAPER):
-            console.log("You win! Scissors beats Paper!");
-            return "w";
-        default:
-            console.log("Tie");
-            return "t";
-    }
+  switch (true) {
+    case (humanChoice === ROCK && computerChoice === PAPER):
+      console.log("You lose! Paper beats Rock!");
+      return "lose";
+    case (humanChoice === ROCK && computerChoice === SCISSORS):
+      console.log("You win! Rock beats Scissors!");
+      return "win";
+    case (humanChoice === PAPER && computerChoice === ROCK):
+      console.log("You win! Paper beats Rock!");
+      return "win";
+    case (humanChoice === PAPER && computerChoice === SCISSORS):
+      console.log("You lose! Scissors beats Paper!");
+      return "lose";
+    case (humanChoice === SCISSORS && computerChoice === ROCK):
+      console.log("You lose! Rock beats Scissors!");
+      return "lose";
+    case (humanChoice === SCISSORS && computerChoice === PAPER):
+      console.log("You win! Scissors beats Paper!");
+      return "win";
+    default:
+      console.log("Tie");
+      return "tie";
+  }
 }
 
-function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
-    for (let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        const score = playRound(humanSelection, computerSelection);
-        if (score === "w") humanScore++;
-        else if (score === "l") computerScore++;
-    }
-    let final = "";
-    if (humanScore > computerScore) final = "Player";
-    else if (computerScore > humanScore) final = "Computer";
-    else final = "Tie, no one";
+// EVENT HANDLERS
+function handleChoiceClick(e) {
+  if (humanScore === 5 || computerScore === 5) return;
+  const choice = e.target.id;
+  const playerChoice = getHumanChoice(choice);
+  const computerChoice = getComputerChoice();
+  const result = playRound(playerChoice, computerChoice);
+  if (result === "win") humanScore++;
+  else if (result === "lose") computerScore++;
+  let final = "";
+  if (humanScore === 5) final = "Player";
+  else if (computerScore === 5) final = "Computer";
+  if (final) {
     console.log(`${final} wins!`);
+  }
 }
 
-// playGame();
+function resetGame() {
+  humanScore = 0;
+  computerScore = 0;
+}
+
+// EVENT LISTENERS
+choiceBtns.forEach(btn => {
+  btn.addEventListener("click", handleChoiceClick);
+});
+
+resetBtn.addEventListener("click", resetGame);
